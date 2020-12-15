@@ -1,0 +1,68 @@
+{
+	"name": "jobs-be",
+	"version": "0.0.1",
+	"description": "Good Worker Jobs Backend Service",
+	"type": "commonjs",
+	"main": "server.js",
+	"scripts": {
+		"test": "./node_modules/.bin/jest tests/** --coverage",
+		"test:unit": "./node_modules/.bin/jest tests/unit/*.js --coverage",
+		"test:e2e": "./node_modules/.bin/jest tests/e2e/*.js --coverage",
+		"start": "NODE_ENV=production node src/server.js",
+		"dev": "nodemon src/server.js",
+		"lint": "./node_modules/.bin/eslint ./src",
+		"lint:fix": "./node_modules/.bin/eslint ./src --fix",
+		"predeploy": "NODE_ENV=production npm install",
+		"deploy": "NODE_ENV=production npm start"
+	},
+	"keywords": [
+		"node",
+		"express",
+		"mongodb",
+		"logging",
+		"auth",
+		"validation",
+		"boilerplate-template"
+	],
+	"author": "Anurag Mishra",
+	"license": "MIT",
+	"homepage": "https://github.com/anuragmishra1/express_boilerplate#readme",
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/anuragmishra1/express_boilerplate.git"
+	},
+	"bugs": {
+		"url": "https://github.com/anuragmishra1/express_boilerplate/issues"
+	},
+	"dependencies": {
+		"body-parser": "^1.19.0",
+		"cors": "^2.8.5",
+		"dotenv": "^8.2.0",
+		"express": "^4.17.1",
+		"helmet": "^3.23.0",
+		"joi": "^17.3.0",
+		"jsonwebtoken": "^8.5.1",
+		"mongoose": "^5.9.18",
+		"winston": "^3.2.1"
+	},
+	"devDependencies": {
+		"eslint": "^7.2.0",
+		"eslint-config-prettier": "^6.11.0",
+		"eslint-plugin-node": "^11.1.0",
+		"eslint-plugin-prettier": "^3.1.4",
+		"eslint-plugin-security": "^1.4.0",
+		"husky": "^4.2.5",
+		"jest": "^26.0.1",
+		"nodemon": "^2.0.4",
+		"prettier": "2.0.5",
+		"sinon": "^9.0.2"
+	},
+	"engines": {
+		"node": ">=8.10.0"
+	},
+	"husky": {
+		"hooks": {
+			"pre-commit": "npm run lint:fix && git add ."
+		}
+	}
+}
