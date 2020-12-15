@@ -1,7 +1,7 @@
 FROM node
 
-COPY . /app
 WORKDIR /app
+COPY . /app
 RUN npm install --production
 
 EXPOSE 3003

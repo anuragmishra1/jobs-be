@@ -26,13 +26,13 @@
 	],
 	"author": "Anurag Mishra",
 	"license": "MIT",
-	"homepage": "https://github.com/anuragmishra1/express_boilerplate#readme",
+	"homepage": "https://github.com/anuragmishra1/jobs-be#readme",
 	"repository": {
 		"type": "git",
-		"url": "git+https://github.com/anuragmishra1/express_boilerplate.git"
+		"url": "git+https://github.com/anuragmishra1/jobs-be.git"
 	},
 	"bugs": {
-		"url": "https://github.com/anuragmishra1/express_boilerplate/issues"
+		"url": "https://github.com/anuragmishra1/jobs-be/issues"
 	},
 	"dependencies": {
 		"body-parser": "^1.19.0",
