@@ -1,0 +1,65 @@
+'use strict';
+
+const fs = require('fs');
+const path = require('path');
+const Services = require('../services');
+
+const applyJob = async (req, res) => {
+	if (!req.file) {
+		return res.status(400).json({
+			status: 'failure',
+			message: 'Resume is required'
+		});
+	}
+
+	const filePath = path.resolve(__dirname, `../../${req.file.path}`);
+	const fileBufData = fs.readFileSync(filePath, 'base64');
+	fs.unlinkSync(filePath);
+
+	req.body.resume = fileBufData;
+	req.body.job_id = req.params.jobId;
+
+	let applicantData = {};
+
+	try {
+		applicantData = await Services.applicant.create(req.body);
+	} catch (err) {
+		return res.status(400).json({
+			status: 'failure',
+			message: err.message
+		});
+	}
+
+	res.status(200).json({
+		status: 'success',
+		message: 'Job applied successfully',
+		id: applicantData._id
+	});
+};
+
+const getApplicants = async (req, res) => {
+	let applicants = [];
+
+	const criteria = {
+		job_id: req.params.jobId
+	};
+
+	try {
+		applicants = await Services.applicant.find(criteria);
+	} catch (err) {
+		return res.status(400).json({
+			status: 'failure',
+			message: err.message
+		});
+	}
+
+	res.status(200).json({
+		status: 'success',
+		data: applicants
+	});
+};
+
+module.exports = {
+	applyJob,
+	getApplicants
+};

@@ -25,7 +25,8 @@ const checkAuth = (req, res, next) => {
 	req.userData = {
 		id: decoded.id,
 		role: decoded.role,
-		email: decoded.email
+		email: decoded.email,
+		company: decoded.company
 	};
 	next();
 };

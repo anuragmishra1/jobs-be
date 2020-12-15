@@ -1,5 +1,7 @@
 'use strict';
 
 module.exports = {
-	user: require('./user')
+	user: require('./user'),
+	job: require('./job'),
+	applicant: require('./applicant')
 };

@@ -34,7 +34,7 @@ app.use(cors());
 app.use(helmet());
 app.use(httpLog());
 
-app.use('/', routes);
+app.use('/v1/', routes);
 
 app.get('/', (req, res) => {
 	res.json({
@@ -49,12 +49,18 @@ app.use((req, res, next) => {
 });
 
 // Middleware error handler
-app.use((error, req, res, next) => {
+app.use((error, _, res, next) => {
 	res.status(error.status || 500).send({
 		status: error.status || 500,
 		message: error.message || 'Internal Server Error'
 	});
 	next();
+});
+
+// Listen on unhandledRejection signal
+process.on('unhandledRejection', (err) => {
+	console.error('Unhandled Rejection error: ', err);
+	process.exit(1);
 });
 
 app.listen(PORT, () => {

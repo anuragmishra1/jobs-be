@@ -5,7 +5,7 @@ require('dotenv').config();
 const Services = require('../services');
 
 const login = async (req, res) => {
-	let users = [];
+	let userData = {};
 	const criteria = {
 		email: req.body.email,
 		password: Buffer.from(req.body.password, 'base64')
@@ -17,7 +17,7 @@ const login = async (req, res) => {
 	};
 
 	try {
-		users = await Services.user.find(criteria, projection, {});
+		userData = await Services.user.findOne(criteria, projection, {});
 	} catch (err) {
 		return res.status(400).json({
 			status: 'failure',
@@ -25,7 +25,7 @@ const login = async (req, res) => {
 		});
 	}
 
-	if (users.length === 0) {
+	if (!userData) {
 		return res.status(404).json({
 			status: 'failure',
 			message: 'Email or password is incorrect'
@@ -33,13 +33,13 @@ const login = async (req, res) => {
 	}
 
 	let token = null;
-	let userData = users[0];
 	try {
 		token = jwt.sign(
 			{
 				id: userData._id,
 				role: userData.role,
-				email: userData.email
+				email: userData.email,
+				company: userData.company
 			},
 			process.env.JWT_SECRET_KEY,
 			{
@@ -74,6 +74,7 @@ const create = async (req, res) => {
 
 	res.status(200).json({
 		status: 'success',
+		message: 'User created successfully',
 		id: userData._id
 	});
 };
@@ -102,7 +103,7 @@ const update = async (req, res) => {
 	};
 
 	try {
-		userData = await Services.user.update(criteria, req.body, {});
+		await Services.user.update(criteria, req.body, {});
 	} catch (err) {
 		return res.status(400).json({
 			status: 'failure',
@@ -112,7 +113,7 @@ const update = async (req, res) => {
 
 	res.status(200).json({
 		status: 'success',
-		message: 'Updated successfully'
+		message: 'User updated successfully'
 	});
 };
 
@@ -180,7 +181,7 @@ const remove = async (req, res) => {
 
 	res.status(200).json({
 		status: 'success',
-		message: 'Deleted successfully'
+		message: 'User deleted successfully'
 	});
 };
 

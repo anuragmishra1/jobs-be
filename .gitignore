@@ -13,6 +13,7 @@ node_modules
 
 logs
 coverage
+uploads
 
 *.csv
 *.dat

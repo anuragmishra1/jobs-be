@@ -1,7 +1,7 @@
 'use strict';
 
 const log = () => {
-	return (req, res, next) => {
+	return (req, _, next) => {
 		const { rawHeaders, httpVersion, method, socket, url } = req;
 		const { remoteAddress, remoteFamily } = socket;
 
