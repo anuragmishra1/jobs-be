@@ -135,11 +135,11 @@ const getAllJobs = async (req, res) => {
 		if (typeof req.query.technology === 'string') {
 			criteria = {
 				technologies: { $in: [req.query.technology] }
-			}
+			};
 		} else {
 			criteria = {
 				technologies: { $in: req.query.technology }
-			}
+			};
 		}
 	}
 
