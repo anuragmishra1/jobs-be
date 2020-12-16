@@ -84,8 +84,7 @@ const job = {
 		.keys({
 			name: Joi.string().required(),
 			email: Joi.string().email().required(),
-			phone: Joi.string().required(),
-			job_id: Joi.string().required()
+			phone: Joi.string().required()
 		})
 		.required(),
 
@@ -93,7 +92,20 @@ const job = {
 		.keys({
 			jobId: Joi.string()
 				.regex(/^[0-9a-fA-F]{24}$/)
-				.message('Invalid id provided')
+				.message('Invalid job id provided')
+				.required()
+		})
+		.required(),
+
+	applicantDetail: Joi.object()
+		.keys({
+			jobId: Joi.string()
+				.regex(/^[0-9a-fA-F]{24}$/)
+				.message('Invalid job id provided')
+				.required(),
+			applicantId: Joi.string()
+				.regex(/^[0-9a-fA-F]{24}$/)
+				.message('Invalid applicant id provided')
 				.required()
 		})
 		.required()

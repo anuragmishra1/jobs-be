@@ -69,10 +69,16 @@ router.post(
 	applicant.applyJob
 );
 router.get(
-	'/job/:jobId/applicant',
+	'/job/:jobId/applicants',
 	auth.checkAuth,
 	validation.params(schema.job.getApplyingJobId),
 	applicant.getApplicants
+);
+router.get(
+	'/job/:jobId/applicant/:applicantId',
+	auth.checkAuth,
+	validation.params(schema.job.applicantDetail),
+	applicant.getApplicantDetail
 );
 
 module.exports = router;

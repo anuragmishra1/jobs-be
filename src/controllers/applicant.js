@@ -43,9 +43,13 @@ const getApplicants = async (req, res) => {
 	const criteria = {
 		job_id: req.params.jobId
 	};
+	const projection = {
+		__v: 0,
+		resume: 0
+	};
 
 	try {
-		applicants = await Services.applicant.find(criteria);
+		applicants = await Services.applicant.find(criteria, projection);
 	} catch (err) {
 		return res.status(400).json({
 			status: 'failure',
@@ -59,7 +63,33 @@ const getApplicants = async (req, res) => {
 	});
 };
 
+const getApplicantDetail = async (req, res) => {
+	let applicantData = {};
+
+	const projection = {
+		__v: 0
+	};
+
+	try {
+		applicantData = await Services.applicant.findById(
+			req.params.applicantId,
+			projection
+		);
+	} catch (err) {
+		return res.status(400).json({
+			status: 'failure',
+			message: err.message
+		});
+	}
+
+	res.status(200).json({
+		status: 'success',
+		data: applicantData
+	});
+};
+
 module.exports = {
 	applyJob,
-	getApplicants
+	getApplicants,
+	getApplicantDetail
 };
