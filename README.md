@@ -55,24 +55,25 @@
 
 ```
 .
-├── .dockerignore
-├── .env
-├── .eslintignore
-├── .eslintrc.json
-├── .gitignore
-├── CODE_OF_CONDUCT.md
 ├── Dockerfile
-├── LICENSE
+├── Procfile
 ├── README.md
+├── logs
+│   ├── app.log
+│   └── http.log
 ├── package-lock.json
 ├── package.json
 ├── src
 │   ├── controllers
+│   │   ├── applicant.js
 │   │   ├── index.js
+│   │   ├── job.js
 │   │   └── user.js
 │   ├── db.js
 │   ├── models
+│   │   ├── applicant.js
 │   │   ├── index.js
+│   │   ├── job.js
 │   │   └── user.js
 │   ├── routes.js
 │   ├── server.js
@@ -86,12 +87,13 @@
 │       ├── validation.js
 │       ├── validationSchema.js
 │       └── winston.js
-└── tests
-    ├── e2e
-    │   └── note
-    └── unit
-        ├── note
-        └── test.js
+├── tests
+│   ├── e2e
+│   │   └── note
+│   └── unit
+│       ├── note
+│       └── test.js
+└── uploads
 ```
 
 # API Documentation (Postman Collection)
