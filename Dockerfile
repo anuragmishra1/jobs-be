@@ -4,6 +4,6 @@ WORKDIR /app
 COPY . /app
 RUN npm install --production
 
-EXPOSE 3003
+EXPOSE 3000
 
 ENTRYPOINT ["npm", "start"]

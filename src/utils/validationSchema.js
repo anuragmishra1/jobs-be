@@ -23,8 +23,8 @@ const user = {
 
 	updateUser: Joi.object()
 		.keys({
-			first_name: Joi.string().required(),
-			last_name: Joi.string().required(),
+			first_name: Joi.string(),
+			last_name: Joi.string(),
 			role: Joi.string().valid('admin').default('admin')
 		})
 		.required(),
@@ -54,12 +54,12 @@ const job = {
 
 	updateJob: Joi.object()
 		.keys({
-			title: Joi.string().required(),
-			location: Joi.string().required(),
-			company_website: Joi.string().required(),
-			about_company: Joi.string().required(),
-			responsibilties: Joi.string().required(),
-			required_experience: Joi.string().required(),
+			title: Joi.string(),
+			location: Joi.string(),
+			company_website: Joi.string(),
+			about_company: Joi.string(),
+			responsibilties: Joi.string(),
+			required_experience: Joi.string(),
 			educational_qualification: Joi.string(),
 			expired: Joi.boolean().default(false)
 		})

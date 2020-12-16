@@ -18,7 +18,7 @@ router.get(
 	user.getDetail
 );
 router.post('/user', validation.body(schema.user.createUser), user.create);
-router.post(
+router.put(
 	'/user/:id',
 	auth.checkAuth,
 	validation.body(schema.user.updateUser),
@@ -52,14 +52,19 @@ router.post(
 	validation.body(schema.job.createJob),
 	job.create
 );
-router.post(
+router.put(
 	'/job/:id',
 	auth.checkAuth,
 	upload.single('company_logo'),
 	validation.params(schema.job.updateJob),
 	job.update
 );
-router.delete('/job/:id', validation.params(schema.job.getJobId), job.remove);
+router.delete(
+	'/job/:id',
+	auth.checkAuth,
+	validation.params(schema.job.getJobId),
+	job.remove
+);
 
 router.post(
 	'/job/:jobId/apply',
