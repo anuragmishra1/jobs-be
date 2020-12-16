@@ -130,9 +130,21 @@ const getAllJobs = async (req, res) => {
 	const projection = {
 		__v: 0
 	};
+	let criteria = {};
+	if (req.query.technology) {
+		if (typeof req.query.technology === 'string') {
+			criteria = {
+				technologies: { $in: [req.query.technology] }
+			}
+		} else {
+			criteria = {
+				technologies: { $in: req.query.technology }
+			}
+		}
+	}
 
 	try {
-		jobs = await Services.job.find({}, projection, options);
+		jobs = await Services.job.find(criteria, projection, options);
 	} catch (err) {
 		return res.status(400).json({
 			status: 'failure',
