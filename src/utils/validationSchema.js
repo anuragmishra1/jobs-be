@@ -49,7 +49,7 @@ const job = {
 			responsibilties: Joi.string().required(),
 			required_experience: Joi.string().required(),
 			educational_qualification: Joi.string(),
-			technologies: Joi.array().items(Joi.string()).required()
+			technologies: Joi.string().required()
 		})
 		.required(),
 
@@ -62,7 +62,7 @@ const job = {
 			responsibilties: Joi.string(),
 			required_experience: Joi.string(),
 			educational_qualification: Joi.string(),
-			technologies: Joi.array().items(Joi.string()),
+			technologies: Joi.string(),
 			expired: Joi.boolean().default(false)
 		})
 		.required(),

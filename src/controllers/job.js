@@ -22,6 +22,7 @@ const create = async (req, res) => {
 	const company = req.userData.company.replace(/ /g, '-').toLowerCase();
 	const title = req.body.title.replace(/ /g, '-').toLowerCase();
 	req.body.slug = `${company}-${title}-${nanoid(5)}`;
+	req.body.technologies = JSON.parse(req.body.technologies);
 
 	let jobData = {};
 
@@ -67,9 +68,15 @@ const update = async (req, res) => {
 		fs.unlinkSync(filePath);
 	}
 
-	const company = req.userData.company.replace(/ /g, '-').toLowerCase();
-	const title = req.body.title.replace(/ /g, '-').toLowerCase();
-	req.body.slug = `${company}-${title}-${nanoid(5)}`;
+	if (req.body.title) {
+		const company = req.userData.company.replace(/ /g, '-').toLowerCase();
+		const title = req.body.title.replace(/ /g, '-').toLowerCase();
+		req.body.slug = `${company}-${title}-${nanoid(5)}`;
+	}
+
+	if (req.body.technologies) {
+		req.body.technologies = JSON.parse(req.body.technologies);
+	}
 
 	const criteria = {
 		_id: req.params.id
