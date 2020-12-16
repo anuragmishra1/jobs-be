@@ -19,9 +19,9 @@ const create = async (req, res) => {
 
 	req.body.company_logo = fileBufData;
 	req.body.company_name = req.userData.company;
-	req.body.slug = `${req.userData.company.toLowerCase()}-${req.body.title.toLowerCase()}-${nanoid(
-		5
-	)}`;
+	const company = req.userData.company.replace(/ /g, '-').toLowerCase();
+	const title = req.body.title.replace(/ /g, '-').toLowerCase();
+	req.body.slug = `${company}-${title}-${nanoid(5)}`;
 
 	let jobData = {};
 
@@ -67,9 +67,9 @@ const update = async (req, res) => {
 		fs.unlinkSync(filePath);
 	}
 
-	req.body.slug = `${req.userData.company.toLowerCase()}-${req.body.title.toLowerCase()}-${nanoid(
-		5
-	)}`;
+	const company = req.userData.company.replace(/ /g, '-').toLowerCase();
+	const title = req.body.title.replace(/ /g, '-').toLowerCase();
+	req.body.slug = `${company}-${title}-${nanoid(5)}`;
 
 	const criteria = {
 		_id: req.params.id
