@@ -26,7 +26,7 @@ const login = async (req, res) => {
 	}
 
 	if (!userData) {
-		return res.status(404).json({
+		return res.status(401).json({
 			status: 'failure',
 			message: 'Email or password is incorrect'
 		});
