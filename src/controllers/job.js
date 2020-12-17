@@ -118,8 +118,7 @@ const getAllJobs = async (req, res) => {
 		skip: req.query.skip || 0
 	};
 	const projection = {
-		__v: 0,
-		_id: 0
+		__v: 0
 	};
 	let criteria = {};
 	if (req.query.technology) {
