@@ -18,7 +18,7 @@ const create = async (req, res) => {
 	fs.unlinkSync(filePath);
 
 	req.body.company_logo = fileBufData;
-	const company = req.body.company.replace(/ /g, '-').toLowerCase();
+	const company = req.body.company_name.replace(/ /g, '-').toLowerCase();
 	const title = req.body.title.replace(/ /g, '-').toLowerCase();
 	req.body.slug = `${company}-${title}-${nanoid(5)}`;
 	req.body.technologies = JSON.parse(req.body.technologies);
@@ -69,7 +69,7 @@ const update = async (req, res) => {
 	}
 
 	if (req.body.title && req.body.company_name) {
-		const company = req.body.company.replace(/ /g, '-').toLowerCase();
+		const company = req.body.company_name.replace(/ /g, '-').toLowerCase();
 		const title = req.body.title.replace(/ /g, '-').toLowerCase();
 		req.body.slug = `${company}-${title}-${nanoid(5)}`;
 	}
