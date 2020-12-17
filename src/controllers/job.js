@@ -18,11 +18,11 @@ const create = async (req, res) => {
 	fs.unlinkSync(filePath);
 
 	req.body.company_logo = fileBufData;
-	req.body.company_name = req.userData.company;
-	const company = req.userData.company.replace(/ /g, '-').toLowerCase();
+	const company = req.body.company.replace(/ /g, '-').toLowerCase();
 	const title = req.body.title.replace(/ /g, '-').toLowerCase();
 	req.body.slug = `${company}-${title}-${nanoid(5)}`;
 	req.body.technologies = JSON.parse(req.body.technologies);
+	req.body.created_by = req.userData.id;
 
 	let jobData = {};
 
@@ -68,8 +68,8 @@ const update = async (req, res) => {
 		fs.unlinkSync(filePath);
 	}
 
-	if (req.body.title) {
-		const company = req.userData.company.replace(/ /g, '-').toLowerCase();
+	if (req.body.title && req.body.company_name) {
+		const company = req.body.company.replace(/ /g, '-').toLowerCase();
 		const title = req.body.title.replace(/ /g, '-').toLowerCase();
 		req.body.slug = `${company}-${title}-${nanoid(5)}`;
 	}
@@ -101,7 +101,7 @@ const getAll = async (req, res) => {
 	let jobs = [];
 
 	let criteria = {
-		company_name: req.userData.company
+		created_by: req.userData.id
 	};
 	const options = {
 		limit: req.query.limit || 0,

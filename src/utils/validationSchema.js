@@ -44,6 +44,7 @@ const job = {
 		.keys({
 			title: Joi.string().required(),
 			location: Joi.string().required(),
+			company_name: Joi.string().required(),
 			company_website: Joi.string().required(),
 			about_company: Joi.string().required(),
 			responsibilties: Joi.string().required(),
@@ -57,6 +58,7 @@ const job = {
 		.keys({
 			title: Joi.string(),
 			location: Joi.string(),
+			company_name: Joi.string(),
 			company_website: Joi.string(),
 			about_company: Joi.string(),
 			responsibilties: Joi.string(),
