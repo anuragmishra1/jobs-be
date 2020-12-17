@@ -14,7 +14,7 @@ const jobSchema = new Schema(
 		company_website: { type: String, trim: true, required: true },
 		responsibilties: { type: String, trim: true, required: true },
 		required_experience: { type: String, trim: true, required: true },
-		educational_qualification: { type: String, trim: true },
+		job_description: { type: String, trim: true, required: true },
 		technologies: [{ type: String, trim: true }],
 		expired: { type: Boolean, default: false },
 		created_by: { type: String, required: true }
