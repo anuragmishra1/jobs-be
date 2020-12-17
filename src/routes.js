@@ -3,7 +3,12 @@
 const express = require('express');
 const router = express.Router();
 const multer = require('multer');
-const upload = multer({ dest: 'uploads/' });
+const upload = multer({
+	dest: 'uploads/',
+	limits: {
+		fieldSize: 25 * 1024 * 1024
+	}
+});
 
 const { user, job, applicant } = require('./controllers');
 const { auth, validation, schema } = require('./utils');
@@ -48,15 +53,14 @@ router.get(
 router.post(
 	'/job',
 	auth.checkAuth,
-	upload.single('company_logo'),
 	validation.body(schema.job.createJob),
 	job.create
 );
 router.put(
 	'/job/:id',
 	auth.checkAuth,
-	upload.single('company_logo'),
-	validation.params(schema.job.updateJob),
+	validation.body(schema.job.updateJob),
+	validation.params(schema.job.getJobId),
 	job.update
 );
 router.delete(
@@ -64,6 +68,13 @@ router.delete(
 	auth.checkAuth,
 	validation.params(schema.job.getJobId),
 	job.remove
+);
+router.post(
+	'/job/:jobId/logo',
+	auth.checkAuth,
+	upload.single('company_logo'),
+	validation.params(schema.job.getApplyingJobId),
+	job.uploadLogo
 );
 
 router.post(

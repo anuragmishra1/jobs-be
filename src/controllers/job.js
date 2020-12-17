@@ -6,22 +6,9 @@ const { nanoid } = require('nanoid');
 const Services = require('../services');
 
 const create = async (req, res) => {
-	if (!req.file) {
-		return res.status(400).json({
-			status: 'failure',
-			message: 'Company logo is required'
-		});
-	}
-
-	const filePath = path.resolve(__dirname, `../../${req.file.path}`);
-	const fileBufData = fs.readFileSync(filePath, 'base64');
-	fs.unlinkSync(filePath);
-
-	req.body.company_logo = fileBufData;
 	const company = req.body.company_name.replace(/ /g, '-').toLowerCase();
 	const title = req.body.title.replace(/ /g, '-').toLowerCase();
 	req.body.slug = `${company}-${title}-${nanoid(5)}`;
-	req.body.technologies = JSON.parse(req.body.technologies);
 	req.body.created_by = req.userData.id;
 
 	let jobData = {};
@@ -74,16 +61,12 @@ const update = async (req, res) => {
 		req.body.slug = `${company}-${title}-${nanoid(5)}`;
 	}
 
-	if (req.body.technologies) {
-		req.body.technologies = JSON.parse(req.body.technologies);
-	}
-
 	const criteria = {
 		_id: req.params.id
 	};
 
 	try {
-		await Services.job.update(criteria, req.body, {});
+		await Services.job.update(criteria, req.body);
 	} catch (err) {
 		return res.status(400).json({
 			status: 'failure',
@@ -135,7 +118,8 @@ const getAllJobs = async (req, res) => {
 		skip: req.query.skip || 0
 	};
 	const projection = {
-		__v: 0
+		__v: 0,
+		_id: 0
 	};
 	let criteria = {};
 	if (req.query.technology) {
@@ -168,7 +152,11 @@ const getAllJobs = async (req, res) => {
 const getDetail = async (req, res) => {
 	let jobData = {};
 	const projection = {
-		__v: 0
+		__v: 0,
+		createdAt: 0,
+		updatedAt: 0,
+		created_by: 0,
+		_id: 0
 	};
 
 	try {
@@ -193,7 +181,8 @@ const getDetailBySlug = async (req, res) => {
 		slug: req.params.slug
 	};
 	const projection = {
-		__v: 0
+		__v: 0,
+		_id: 0
 	};
 
 	try {
@@ -231,6 +220,58 @@ const remove = async (req, res) => {
 	});
 };
 
+const uploadLogo = async (req, res) => {
+	let jobData = {};
+
+	try {
+		jobData = await Services.job.findById(req.params.jobId);
+	} catch (err) {
+		return res.status(400).json({
+			status: 'failure',
+			message: err.message
+		});
+	}
+
+	if (!jobData) {
+		return res.status(400).json({
+			status: 'failure',
+			message: 'Job Id not exists'
+		});
+	}
+
+	if (!req.file) {
+		return res.status(400).json({
+			status: 'failure',
+			message: 'Company logo is required'
+		});
+	}
+
+	const filePath = path.resolve(__dirname, `../../${req.file.path}`);
+	const fileBufData = fs.readFileSync(filePath, 'base64');
+	fs.unlinkSync(filePath);
+	const job = {
+		company_logo: fileBufData
+	};
+
+	const criteria = {
+		_id: req.params.jobId
+	};
+
+	try {
+		await Services.job.update(criteria, job);
+	} catch (err) {
+		return res.status(400).json({
+			status: 'failure',
+			message: err.message
+		});
+	}
+
+	res.status(200).json({
+		status: 'success',
+		message: 'Logo uploaded successfully'
+	});
+};
+
 module.exports = {
 	create,
 	update,
@@ -238,5 +279,6 @@ module.exports = {
 	getAllJobs,
 	getDetail,
 	getDetailBySlug,
-	remove
+	remove,
+	uploadLogo
 };

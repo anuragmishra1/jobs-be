@@ -8,7 +8,7 @@ const jobSchema = new Schema(
 		title: { type: String, trim: true, required: true },
 		slug: { type: String, trim: true, required: true, unique: true },
 		location: { type: String, trim: true, required: true },
-		company_logo: { type: String, required: true },
+		company_logo: { type: String },
 		company_name: { type: String, trim: true, required: true },
 		about_company: { type: String, trim: true, required: true },
 		company_website: { type: String, trim: true, required: true },

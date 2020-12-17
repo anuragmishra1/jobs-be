@@ -17,7 +17,7 @@ const login = async (req, res) => {
 	};
 
 	try {
-		userData = await Services.user.findOne(criteria, projection, {});
+		userData = await Services.user.findOne(criteria, projection);
 	} catch (err) {
 		return res.status(400).json({
 			status: 'failure',
@@ -103,7 +103,7 @@ const update = async (req, res) => {
 	};
 
 	try {
-		await Services.user.update(criteria, req.body, {});
+		await Services.user.update(criteria, req.body);
 	} catch (err) {
 		return res.status(400).json({
 			status: 'failure',
