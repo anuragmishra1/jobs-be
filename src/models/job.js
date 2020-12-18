@@ -17,6 +17,7 @@ const jobSchema = new Schema(
 		job_description: { type: String, trim: true, required: true },
 		technologies: [{ type: String, trim: true }],
 		expired: { type: Boolean, default: false },
+		no_of_applicants: { type: Number },
 		created_by: { type: String, required: true }
 	},
 	{

@@ -23,6 +23,10 @@ const applyJob = async (req, res) => {
 
 	try {
 		applicantData = await Services.applicant.create(req.body);
+		await Services.job.update(
+			{ _id: req.params.jobId },
+			{ $inc: { no_of_applicants: 1 } }
+		);
 	} catch (err) {
 		return res.status(400).json({
 			status: 'failure',
