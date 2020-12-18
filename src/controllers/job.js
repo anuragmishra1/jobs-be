@@ -180,8 +180,7 @@ const getDetailBySlug = async (req, res) => {
 		slug: req.params.slug
 	};
 	const projection = {
-		__v: 0,
-		_id: 0
+		__v: 0
 	};
 
 	try {
