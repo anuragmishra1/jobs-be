@@ -5,9 +5,7 @@
 	"type": "commonjs",
 	"main": "server.js",
 	"scripts": {
-		"test": "./node_modules/.bin/jest tests/** --coverage",
-		"test:unit": "./node_modules/.bin/jest tests/unit/*.js --coverage",
-		"test:e2e": "./node_modules/.bin/jest tests/e2e/*.js --coverage",
+		"test": "NODE_ENV=test ./node_modules/.bin/mocha --recursive \"./tests/api/**/*.test.js\" --exit",
 		"start": "NODE_ENV=production node src/server.js",
 		"dev": "nodemon src/server.js",
 		"lint": "./node_modules/.bin/eslint ./src",
@@ -21,8 +19,7 @@
 		"mongodb",
 		"logging",
 		"auth",
-		"validation",
-		"boilerplate-template"
+		"validation"
 	],
 	"author": "Anurag Mishra",
 	"license": "MIT",
@@ -48,16 +45,18 @@
 		"winston": "^3.2.1"
 	},
 	"devDependencies": {
+		"chai": "^4.2.0",
 		"eslint": "^7.2.0",
 		"eslint-config-prettier": "^6.11.0",
 		"eslint-plugin-node": "^11.1.0",
 		"eslint-plugin-prettier": "^3.1.4",
 		"eslint-plugin-security": "^1.4.0",
 		"husky": "^4.2.5",
-		"jest": "^26.0.1",
+		"mocha": "^8.2.1",
+		"mockgoose": "^8.0.4",
 		"nodemon": "^2.0.4",
 		"prettier": "2.0.5",
-		"sinon": "^9.0.2"
+		"supertest": "^6.0.1"
 	},
 	"engines": {
 		"node": ">=8.10.0"

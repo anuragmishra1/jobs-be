@@ -5,12 +5,13 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 const helmet = require('helmet');
 const path = require('path');
+require('dotenv').config();
 
 global.APP_ROOT = path.resolve(__dirname, '../');
 
-require('dotenv').config();
-require('./db');
+const { connect } = require('./db');
 const { httpLog, logger } = require('./utils');
+
 global.logger = logger;
 
 const routes = require('./routes');
@@ -32,7 +33,10 @@ app.use(bodyParser.json({ limit: '100kb' }));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cors());
 app.use(helmet());
-app.use(httpLog());
+
+if (process.env.NODE_ENV !== 'test') {
+	app.use(httpLog());
+}
 
 app.use('/v1/', routes);
 
@@ -63,9 +67,19 @@ process.on('unhandledRejection', (err) => {
 	process.exit(1);
 });
 
-app.listen(PORT, () => {
-	console.log(
-		'\x1b[32m%s\x1b[0m',
-		`The server is listening on http://localhost:${PORT}`
-	);
-});
+if (require.main === module) {
+	connect()
+		.then(() => {
+			app.listen(PORT, () => {
+				console.log(
+					'\x1b[32m%s\x1b[0m',
+					`The server is listening on http://localhost:${PORT}`
+				);
+			});
+		})
+		.catch(() => {
+			process.exit(1);
+		});
+}
+
+module.exports = app;
