@@ -8,7 +8,7 @@ const login = async (req, res) => {
 	let userData = {};
 	const criteria = {
 		email: req.body.email,
-		password: Buffer.from(req.body.password, 'base64')
+		password: Buffer.from(req.body.password).toString('base64')
 	};
 
 	const projection = {
@@ -61,7 +61,7 @@ const login = async (req, res) => {
 
 const create = async (req, res) => {
 	let userData = {};
-	req.body.password = Buffer.from(req.body.password, 'base64');
+	req.body.password = Buffer.from(req.body.password).toString('base64');
 
 	try {
 		userData = await Services.user.create(req.body);
